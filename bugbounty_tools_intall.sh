@@ -66,6 +66,7 @@ cat -O "$TOOLS"/goaltdns/all.txt "$TOOLS"/goaltdns/subdomains.txt | sort | uniq 
 git clone https://gist.github.com/Rhynorater/6d84748cb4d73f8d878c3c4a86e2c383 "$TOOLS"/getdns;
 mv "$TOOLS"/getdns/getValidDNS.sh "$TOOLS"/;
 rm -rf "$TOOLS"/getdns;
+chmod 777 "$TOOLS"/getValidDNS.sh;
 
 #httprobe 설치
 go get -u github.com/tomnomnom/httprobe;
