@@ -1,0 +1,25 @@
+if [ "$#" -eq 0 ] || [ "$#" -gt 2 ] || [[ $* == *--help* ]] || [[ $* == *-h* ]]; then                                                                                                                              
+    echo "Usage ./getValidDNS.sh [output file] [optional: timeout (seconds)]"                                                                                                                                      
+    exit 1                                                                                                                                                                                                         
+fi                                                                                                                                                                                                                 
+                                                                                                                                                                                                                   
+if [ "$#" -eq 2 ]; then                                                                                                                                                                                            
+    timeout=$2                                                                                                                                                                                                     
+else                                                                                                                                                                                                               
+    timeout=1                                                                                                                                                                                                      
+fi                                                                                                                                                                                                                 
+                                                                                                                                                                                                                   
+rm us.txt                                                                                                                                                                                                          
+wget -q "https://public-dns.info/nameserver/us.txt"                                                                                                                                                                
+for line in $(cat us.txt); do                                                                                                                                                                                      
+    if [[ $line =~ .*:.* ]]; then                                                                                                                                                                                  
+        continue                                                                                                                                                                                                   
+    fi                                                                                                                                                                                                             
+    result=$( dig +time=$timeout A localhost.rhynorater.com @$line )                                                                                                                                               
+    if [[ $result =~ "127.0.0.1" ]]; then                                                                                                                                                                          
+        echo "Valid: $line"                                                                                                                                                                                        
+        echo $line >> $1                                                                                                                                                                                           
+    else                                                                                                                                                                                                           
+        echo "Invalid: $line"                                                                                                                                                                                      
+    fi                                                                                                                                                                                                             
+done
