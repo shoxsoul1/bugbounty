@@ -57,14 +57,14 @@ sudo python setup.py install;
 cd -;
 
 #wordlist 다운로드
-wget https://gist.github.com/jhaddix/86a06c5dc309d08580a018c66354a056/raw/96f4e51d96b2203f19f6381c8c545b278eaa0837/all.txt;
-wget https://github.com/assetnote/commonspeak2-wordlists/raw/master/subdomains/subdomains.txt;
-cat all.txt subdomains.txt | sort | uniq > all_commonspeak2.txt;
-mv all.txt subdomains.txt all_commonspeak2.txt  goaltdns/;
+wget https://gist.github.com/jhaddix/86a06c5dc309d08580a018c66354a056/raw/96f4e51d96b2203f19f6381c8c545b278eaa0837/all.txt -O "$TOOLS"/goaltdns;
+wget https://github.com/assetnote/commonspeak2-wordlists/raw/master/subdomains/subdomains.txt -O "$TOOLS"/goaltdns;
+cat -O "$TOOLS"/goaltdns/all.txt "$TOOLS"/goaltdns/subdomains.txt | sort | uniq > "$TOOLS"/goaltdns/all_commonspeak2.txt;
+
 
 #getValidDNS 다운로드
 git clone https://gist.github.com/Rhynorater/6d84748cb4d73f8d878c3c4a86e2c383 "$TOOLS"/getdns;
-mv "$TOOLS"/getdns/getValidDNS.sh "$TOOLS"/massdns;
+mv "$TOOLS"/getdns/getValidDNS.sh "$TOOLS"/;
 rm -rf "$TOOLS"/getdns;
 
 #httprobe 설치
@@ -73,5 +73,5 @@ mkdir "$TOOLS"/httprobe;
 
 #meg 설치
 go get -u github.com/tomnomnom/meg
-mkidr "$TOOLS"/meg;
+mkdir "$TOOLS"/meg;
 
